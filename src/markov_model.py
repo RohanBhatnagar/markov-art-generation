@@ -21,18 +21,18 @@ class markov_model:
             else: 
                 self.kgrams.update({currKgram: 1})
 
-        for i in range(0, len(self.circularString), 1):
-            currKgram = self.circularString[i:i+self.circularString:1]
-            nextCh = self.circularString[i+self.k]
+        for i in range(0, len(self.circularString) - k, 1):
+            currKgram = self.circularString[i:i+k:1]
+            nextCh = self.circularString[i+k]
 
             freq = [0] * 128
 
             if currKgram in self.nextChar: 
                 freq = self.nextChar.get(currKgram)
-                freq[nextCh] += 1
+                freq[ord(nextCh)] += 1
                 self.nextChar.update({currKgram: freq})
             else: 
-                freq[nextCh] += 1
+                freq[ord(nextCh)] += 1
                 self.nextChar.update({currKgram: freq})
 
     def order(self): 
@@ -68,4 +68,4 @@ class markov_model:
     
     def getRandomChar(self, kgram):
         res = random.choices(markov_model.choices, self.nextChar.get(kgram))
-        return chr(res)
+        return chr(res[0]) 
