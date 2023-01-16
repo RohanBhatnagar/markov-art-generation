@@ -1,1 +1,4 @@
-/Users/rohanbhatnagar/Desktop/markov-art-generation/src/image.PNG
+/Users/rohanbhatnagar/Desktop/markov-art-generation/images/COLORFUL-NIGHT.JPG
+/Users/rohanbhatnagar/Desktop/markov-art-generation/images/image_3363.JPEG
+/Users/rohanbhatnagar/Desktop/markov-art-generation/images/616BpDKJqVL._SY780_.JPG
+/Users/rohanbhatnagar/Desktop/markov-art-generation/images/colorful-paintings.JPG

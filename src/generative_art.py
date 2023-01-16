@@ -1,7 +1,7 @@
 from PIL import Image 
 
-path = "/Users/rohanbhatnagar/Desktop/markov-art-generation/src/sample.JPG"
-image = Image.open(path)
+# path = "/Users/rohanbhatnagar/Desktop/markov-art-generation/src/sample.JPG"
+# image = Image.open(path)
 
 class generative_art(object):
     def __init__(self, path):

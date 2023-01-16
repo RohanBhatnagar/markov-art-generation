@@ -15,7 +15,7 @@ class image_generator():
         Lines = image_file.readlines()
 
         for path in Lines: 
-            g_art = generative_art(path)
+            g_art = generative_art(path.replace("\n", ""))
             hex_string += g_art.convertHex()
 
         model = markov_model(hex_string, k)
@@ -26,6 +26,6 @@ class image_generator():
 
         image_gen = hex_to_image()
         circular_generated = generated_string + generated_string[0:k]
-        image_gen.hexToImage(circular_generated, 151, 100, 6).show()
+        image_gen.hexToImage(circular_generated, 300, 240).show()
 
     main()
