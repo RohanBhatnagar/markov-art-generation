@@ -3,37 +3,38 @@ import random
 
 class markov_model:
 
-    choices = [0] * 128
-    for i in range (0, 128, 1):
-        choices[i] = i
 
     def __init__(self, text, k):
         self.text = text
         self.k = k
         self.kgrams = dict()
         self.nextChar = dict()
-        self.circularString = text + text[0:k:1]
+        self.circularString = text
+        self.unique_colors = 0
 
-        for i in range(0, len(self.circularString), 1):
-            currKgram = self.circularString[i:i+self.k:1]
+        # dict - contains unique kgrams and frequencies. 
+        for i in range(0, len(text) - k, 6):
+            currKgram = self.circularString[i:i+k]
             if currKgram in self.kgrams:
                 self.kgrams.update({currKgram: self.kgrams.get(currKgram) + 1})
             else: 
                 self.kgrams.update({currKgram: 1})
 
-        for i in range(0, len(self.circularString) - k, 1):
+        for i in range(0, len(self.circularString) - k - 6, 6):
             currKgram = self.circularString[i:i+k:1]
-            nextCh = self.circularString[i+k]
+            nextColor = self.circularString[i+k: i+k+6]
 
-            freq = [0] * 128
+            freq = dict()
 
             if currKgram in self.nextChar: 
                 freq = self.nextChar.get(currKgram)
-                freq[ord(nextCh)] += 1
-                self.nextChar.update({currKgram: freq})
-            else: 
-                freq[ord(nextCh)] += 1
-                self.nextChar.update({currKgram: freq})
+            
+            if nextColor not in freq: 
+                self.unique_colors += 1
+                freq[nextColor] = 1
+            else:
+                freq[nextColor] += 1
+            self.nextChar.update({currKgram: freq})
 
     def order(self): 
         return self.k
@@ -64,8 +65,11 @@ class markov_model:
         for key in self.nextChar:
             if key == kgram:
                 freq = self.nextChar.get(kgram)
-                return freq[ord(c)]
+                return freq[c]
     
     def getRandomChar(self, kgram):
-        res = random.choices(markov_model.choices, self.nextChar.get(kgram))
-        return chr(res[0]) 
+        dictionary = self.nextChar.get(kgram)
+        population = list(dictionary.keys())
+        weights = list(dictionary.values())
+        next_color = random.choices(population, weights)
+        return next_color[0]

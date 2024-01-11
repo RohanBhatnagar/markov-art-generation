@@ -11,16 +11,10 @@ class hex_to_image():
 
         for i in range(0, image_width, 1):
             for j in range(0, image_height, 1):
-                pixels[i,j] = tuple(hex_to_image.hexToDecimal(self, hex_string[0: 6: 1]))
-                hex_string = hex_string[6: len(hex_string)]
+                pixels[i,j] = hex_to_image.hexToDecimal(self, hex_string[:6])
+                hex_string = hex_string[6:]
 
         return new_im
 
     def hexToDecimal(self, hex_color):
-        rgb = []
-        for i in (0,2,4):
-            # hex = "0x" + hex_color[i:i+2]
-            # print(hex)
-            decimal = int("0x" + str(hex_color[i: i+2]), 16)
-            rgb.append(decimal)
-        return rgb
+        return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
