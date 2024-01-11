@@ -23,7 +23,8 @@ class image_generator():
             height_avg += image.height
             g_art = generative_art(path.replace("\n", ""))
             hex_string += g_art.convertHex()
-            hex_string += hex_string[0:k]
+        
+        hex_string += hex_string[0:k]
 
         width_avg = int(width_avg/len(Lines))
         height_avg = int(height_avg/len(Lines))
@@ -32,9 +33,12 @@ class image_generator():
 
         T = width_avg*height_avg*6
 
-        for i in range(0, T - k, 6):
-            kgram = hex_string[i: i+k: 1]
-            generated_string += model.getRandomChar(kgram)
+        # should be random
+        generated_string = hex_string[0:k]
+        for i in range(0, T - 6, 6):
+            kgram = generated_string[i:]
+            new_color = model.getRandomChar(kgram)
+            generated_string += new_color
 
         image_gen = hex_to_image()
         circular_generated = generated_string + generated_string[0:k]

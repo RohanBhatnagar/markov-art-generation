@@ -12,8 +12,8 @@ class markov_model:
         self.circularString = text
         self.unique_colors = 0
 
-        # dict - contains unique kgrams and frequencies. 
-        for i in range(0, len(text) - k, 6):
+        # dict - contains unique kgrams and frequencies. this is actually useless 
+        for i in range(0, len(self.circularString) - k - 6, 6):
             currKgram = self.circularString[i:i+k]
             if currKgram in self.kgrams:
                 self.kgrams.update({currKgram: self.kgrams.get(currKgram) + 1})
@@ -21,7 +21,7 @@ class markov_model:
                 self.kgrams.update({currKgram: 1})
 
         for i in range(0, len(self.circularString) - k - 6, 6):
-            currKgram = self.circularString[i:i+k:1]
+            currKgram = self.circularString[i:i+k]
             nextColor = self.circularString[i+k: i+k+6]
 
             freq = dict()
@@ -68,7 +68,12 @@ class markov_model:
                 return freq[c]
     
     def getRandomChar(self, kgram):
-        dictionary = self.nextChar.get(kgram)
+        # hack but fix this
+        kg = kgram
+        if kg not in self.kgrams:
+            print("HI")
+            kg = list(self.kgrams.keys())[0]
+        dictionary = self.nextChar.get(kg)
         population = list(dictionary.keys())
         weights = list(dictionary.values())
         next_color = random.choices(population, weights)
